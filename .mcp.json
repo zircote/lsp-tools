@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "claude-plugin-template": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {}
+    }
+  }
+}

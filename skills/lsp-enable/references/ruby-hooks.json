@@ -1,0 +1,36 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "rubocop-format-on-edit",
+      "description": "Run RuboCop autofix on edited Ruby files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && bundle exec rubocop -A $CLAUDE_FILE_PATHS 2>/dev/null | grep -E '^[^#].*:[0-9]+:[0-9]+:' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".rb", ".rake"]
+      }
+    },
+    {
+      "name": "syntax-check-on-edit",
+      "description": "Run Ruby syntax check after edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "for f in $CLAUDE_FILE_PATHS; do ruby -c \"$f\" 2>&1 | grep -v 'Syntax OK'; done || true",
+      "conditions": {
+        "fileExtensions": [".rb"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && bundle exec rubocop && bundle exec rspec; fi",
+      "blocking": true
+    }
+  ]
+}

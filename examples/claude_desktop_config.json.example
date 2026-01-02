@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "claude-plugin-template": {
-      "command": "node",
-      "args": ["/ABSOLUTE/PATH/TO/claude-plugin-template/dist/index.js"],
-      "env": {}
-    }
-  }
-}

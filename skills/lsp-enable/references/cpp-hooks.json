@@ -1,0 +1,47 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run clang-format on edited C/C++ files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "clang-format -i $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".c", ".cpp", ".cc", ".cxx", ".h", ".hpp", ".hxx"]
+      }
+    },
+    {
+      "name": "build-check",
+      "description": "Run build after C/C++ edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "if [ -d \"$CLAUDE_PROJECT_DIR/build\" ]; then cd \"$CLAUDE_PROJECT_DIR\" && cmake --build build 2>&1 | grep -E '^.*error:' | head -10; elif [ -f \"$CLAUDE_PROJECT_DIR/Makefile\" ]; then cd \"$CLAUDE_PROJECT_DIR\" && make 2>&1 | grep -E '^.*error:' | head -10; fi || true",
+      "conditions": {
+        "fileExtensions": [".c", ".cpp", ".cc", ".cxx", ".h", ".hpp"]
+      }
+    },
+    {
+      "name": "clang-tidy-on-edit",
+      "description": "Run clang-tidy for static analysis",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "clang-tidy $CLAUDE_FILE_PATHS 2>/dev/null | grep -E '^.*warning:|^.*error:' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".c", ".cpp", ".cc", ".cxx"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && cmake --build build && ctest --test-dir build --output-on-failure; fi",
+      "blocking": true
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 title: Add a Claude Code slash command
 ---
 
-Create a new command under `.claude/commands/`.
+Create a new command under `commands/`.
 
 Requirements:
 - Include YAML frontmatter with `description`.

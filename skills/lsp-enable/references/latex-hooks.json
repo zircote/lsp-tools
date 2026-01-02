@@ -1,0 +1,36 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "chktex-on-edit",
+      "description": "Run ChkTeX lint after LaTeX edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "chktex -q $CLAUDE_FILE_PATHS 2>/dev/null | head -15 || true",
+      "conditions": {
+        "fileExtensions": [".tex"]
+      }
+    },
+    {
+      "name": "build-check-on-edit",
+      "description": "Run latexmk to check for compilation errors",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && latexmk -pdf -interaction=nonstopmode $CLAUDE_FILE_PATHS 2>&1 | grep -E '^!' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".tex"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full build before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && latexmk -pdf *.tex; fi",
+      "blocking": true
+    }
+  ]
+}

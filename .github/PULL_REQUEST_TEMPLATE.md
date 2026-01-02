@@ -4,6 +4,6 @@ What does this change do?
 
 ## Checklist
 
-- [ ] I ran `npm run typecheck` and `npm run build`
-- [ ] I updated docs (README / CLAUDE.md) if behavior changed
-- [ ] I considered security implications (tokens, shell commands, filesystem access)
+- [ ] I validated JSON files are valid
+- [ ] I updated docs (README / CHANGELOG) if behavior changed
+- [ ] I tested the `/lsp-tools:lsp-setup` command if hooks were modified

@@ -1,0 +1,29 @@
+{
+    "name": "lsp-tools",
+    "version": "0.4.0",
+    "description": "LSP-first code intelligence for Claude Code with strong enforcement patterns",
+    "author": {
+        "name": "zircote",
+        "email": "zircote@gmail.com"
+    },
+    "repository": "https://github.com/zircote/lsp-tools",
+    "license": "MIT",
+    "keywords": [
+        "lsp",
+        "language-server",
+        "code-intelligence",
+        "claude-plugin",
+        "typescript",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "kotlin",
+        "cpp",
+        "csharp",
+        "php",
+        "ruby",
+        "terraform",
+        "markdown"
+    ]
+}

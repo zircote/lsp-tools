@@ -1,0 +1,47 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run prettier on edited TypeScript/JavaScript files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "npx prettier --write $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]
+      }
+    },
+    {
+      "name": "lint-check-on-edit",
+      "description": "Check for lint errors after TypeScript/JavaScript edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "npx eslint $CLAUDE_FILE_PATHS --format=compact 2>/dev/null | head -20 || true",
+      "conditions": {
+        "fileExtensions": [".ts", ".tsx", ".js", ".jsx"]
+      }
+    },
+    {
+      "name": "typecheck-on-edit",
+      "description": "Run tsc on edited files to catch type errors",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && npx tsc --noEmit 2>&1 | grep -E 'error TS' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".ts", ".tsx"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && npx tsc --noEmit && npx eslint .; fi",
+      "blocking": true
+    }
+  ]
+}

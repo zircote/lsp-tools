@@ -1,0 +1,36 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run dotnet format on edited C# files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && dotnet format --include $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".cs"]
+      }
+    },
+    {
+      "name": "build-check-on-edit",
+      "description": "Run dotnet build after C# edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && dotnet build --no-restore 2>&1 | grep -E 'error CS' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".cs"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && dotnet format --verify-no-changes && dotnet build && dotnet test; fi",
+      "blocking": true
+    }
+  ]
+}

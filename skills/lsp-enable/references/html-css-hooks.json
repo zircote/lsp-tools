@@ -1,0 +1,49 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-html-on-edit",
+      "description": "Run Prettier on edited HTML files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && npx prettier --write $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".html", ".htm"]
+      }
+    },
+    {
+      "name": "format-css-on-edit",
+      "description": "Run Prettier on edited CSS/SCSS files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && npx prettier --write $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".css", ".scss", ".sass", ".less"]
+      }
+    },
+    {
+      "name": "stylelint-on-edit",
+      "description": "Run Stylelint after CSS edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && npx stylelint $CLAUDE_FILE_PATHS 2>/dev/null | head -15 || true",
+      "conditions": {
+        "fileExtensions": [".css", ".scss"]
+      }
+    },
+    {
+      "name": "htmlhint-on-edit",
+      "description": "Run HTMLHint after HTML edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && npx htmlhint $CLAUDE_FILE_PATHS 2>/dev/null | head -15 || true",
+      "conditions": {
+        "fileExtensions": [".html", ".htm"]
+      }
+    }
+  ]
+}

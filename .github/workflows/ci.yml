@@ -5,14 +5,28 @@ on:
   pull_request:
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Validate JSON files
+        run: |
+          echo "Validating .claude-plugin/plugin.json..."
+          python3 -m json.tool .claude-plugin/plugin.json > /dev/null
+          echo "All JSON files valid"
+
+      - name: Check required files exist
+        run: |
+          test -f .claude-plugin/plugin.json || (echo "Missing plugin.json" && exit 1)
+          test -f commands/lsp-setup.md || (echo "Missing commands/lsp-setup.md" && exit 1)
+          test -f skills/lsp-enable/SKILL.md || (echo "Missing skills/lsp-enable/SKILL.md" && exit 1)
+          test -f CLAUDE.md || (echo "Missing CLAUDE.md" && exit 1)
+          test -f README.md || (echo "Missing README.md" && exit 1)
+          test -f CHANGELOG.md || (echo "Missing CHANGELOG.md" && exit 1)
+          echo "All required files present"
+
+      - name: Lint markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
         with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run build
+          globs: "**/*.md"

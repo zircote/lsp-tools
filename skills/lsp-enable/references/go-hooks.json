@@ -1,0 +1,47 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run goimports on edited Go files (formats and fixes imports)",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "goimports -w $CLAUDE_FILE_PATHS 2>/dev/null || gofmt -w $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".go"]
+      }
+    },
+    {
+      "name": "vet-on-edit",
+      "description": "Run go vet after Go file edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && go vet ./... 2>&1 | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".go"]
+      }
+    },
+    {
+      "name": "build-check-on-edit",
+      "description": "Run go build to check for compilation errors",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && go build ./... 2>&1 | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".go"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && go vet ./... && go test ./...; fi",
+      "blocking": true
+    }
+  ]
+}

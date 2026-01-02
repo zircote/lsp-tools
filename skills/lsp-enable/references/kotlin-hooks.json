@@ -1,0 +1,36 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "ktlint-format-on-edit",
+      "description": "Run ktlint format on edited Kotlin files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./gradlew ktlintFormat --console=plain 2>/dev/null || npx ktlint -F $CLAUDE_FILE_PATHS 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".kt", ".kts"]
+      }
+    },
+    {
+      "name": "compile-check-on-edit",
+      "description": "Run Gradle compile check after Kotlin edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./gradlew compileKotlin --console=plain 2>&1 | grep -E '^e:' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".kt", ".kts"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full Gradle quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && ./gradlew ktlintCheck build --console=plain; fi",
+      "blocking": true
+    }
+  ]
+}

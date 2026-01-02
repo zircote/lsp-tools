@@ -1,0 +1,47 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run PHP CS Fixer on edited PHP files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./vendor/bin/php-cs-fixer fix $CLAUDE_FILE_PATHS --quiet 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".php"]
+      }
+    },
+    {
+      "name": "syntax-check-on-edit",
+      "description": "Run PHP syntax check after edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "for f in $CLAUDE_FILE_PATHS; do php -l \"$f\" 2>&1 | grep -v 'No syntax errors'; done || true",
+      "conditions": {
+        "fileExtensions": [".php"]
+      }
+    },
+    {
+      "name": "phpstan-on-edit",
+      "description": "Run PHPStan after PHP edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./vendor/bin/phpstan analyse $CLAUDE_FILE_PATHS --no-progress 2>/dev/null | head -15 || true",
+      "conditions": {
+        "fileExtensions": [".php"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && ./vendor/bin/php-cs-fixer fix --dry-run --diff && ./vendor/bin/phpstan analyse && ./vendor/bin/phpunit; fi",
+      "blocking": true
+    }
+  ]
+}

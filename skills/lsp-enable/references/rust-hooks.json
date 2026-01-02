@@ -1,0 +1,47 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "hooks": [
+    {
+      "name": "format-on-edit",
+      "description": "Run cargo fmt on edited Rust files",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cargo fmt -- $CLAUDE_FILE_PATHS 2>/dev/null || cd \"$CLAUDE_PROJECT_DIR\" && cargo fmt 2>/dev/null || true",
+      "conditions": {
+        "fileExtensions": [".rs"]
+      }
+    },
+    {
+      "name": "check-on-edit",
+      "description": "Run cargo check after Rust file edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && cargo check --message-format=short 2>&1 | grep -E '^error' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".rs"]
+      }
+    },
+    {
+      "name": "clippy-on-edit",
+      "description": "Run clippy for lint warnings after edits",
+      "event": "PostToolUse",
+      "matcher": "Write|Edit|str_replace_editor",
+      "type": "command",
+      "command": "cd \"$CLAUDE_PROJECT_DIR\" && cargo clippy --message-format=short 2>&1 | grep -E '^(warning|error)' | head -10 || true",
+      "conditions": {
+        "fileExtensions": [".rs"]
+      }
+    },
+    {
+      "name": "pre-commit-quality-gate",
+      "description": "Full quality check before git commits",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "type": "command",
+      "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$CLAUDE_PROJECT_DIR\" && cargo fmt -- --check && cargo clippy -- -D warnings && cargo test; fi",
+      "blocking": true
+    }
+  ]
+}

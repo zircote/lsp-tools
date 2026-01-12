@@ -1,0 +1,110 @@
+{
+  "$schema": "https://claude.ai/hooks-schema.json",
+  "description": "Consolidated LSP development hooks for all supported languages",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "name": "lsp-hooks-post",
+        "description": "Run language-specific formatting, linting, and quick checks after file edits",
+        "matcher": "Write|Edit|str_replace_editor",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/lsp-hooks.sh\" post",
+            "timeout": 15
+          }
+        ],
+        "conditions": {
+          "fileExtensions": [
+            ".rs",
+            ".py",
+            ".pyi",
+            ".go",
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx",
+            ".mts",
+            ".cts",
+            ".mjs",
+            ".cjs",
+            ".java",
+            ".kt",
+            ".kts",
+            ".cpp",
+            ".cc",
+            ".cxx",
+            ".c",
+            ".h",
+            ".hpp",
+            ".hxx",
+            ".cs",
+            ".csx",
+            ".php",
+            ".phtml",
+            ".rb",
+            ".rake",
+            ".gemspec",
+            ".sh",
+            ".bash",
+            ".zsh",
+            ".scala",
+            ".sc",
+            ".sbt",
+            ".swift",
+            ".ex",
+            ".exs",
+            ".vue",
+            ".svelte",
+            ".graphql",
+            ".gql",
+            ".hs",
+            ".lhs",
+            ".lua",
+            ".sql",
+            ".json",
+            ".jsonc",
+            ".yaml",
+            ".yml",
+            ".html",
+            ".htm",
+            ".css",
+            ".scss",
+            ".sass",
+            ".less",
+            ".tex",
+            ".latex",
+            ".sty",
+            ".cls",
+            ".bib",
+            ".md",
+            ".markdown",
+            ".zig",
+            ".tf",
+            ".tfvars",
+            ".hcl",
+            ".toml",
+            ".lock",
+            ".mod",
+            ".sum"
+          ]
+        }
+      }
+    ],
+    "PreToolUse": [
+      {
+        "name": "lsp-hooks-pre-commit",
+        "description": "Quality gate: block git commits if language-specific checks fail",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/lsp-hooks.sh\" pre",
+            "timeout": 60,
+            "blocking": true
+          }
+        ]
+      }
+    ]
+  }
+}

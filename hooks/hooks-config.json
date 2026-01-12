@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "description": "Consolidated hook configuration for all LSP languages. Edit to enable/disable languages and tools.",
+
+  "global": {
+    "enabled": true,
+    "parallelExecution": true,
+    "silentOnMissingBinary": true,
+    "outputLimit": 20
+  },
+
+  "extensions": {
+    "py": "python",
+    "pyi": "python",
+    "rs": "rust",
+    "go": "go",
+    "mod": "go",
+    "sum": "go",
+    "ts": "typescript",
+    "tsx": "typescript",
+    "js": "typescript",
+    "jsx": "typescript",
+    "mts": "typescript",
+    "cts": "typescript",
+    "mjs": "typescript",
+    "cjs": "typescript",
+    "java": "java",
+    "kt": "kotlin",
+    "kts": "kotlin",
+    "cpp": "cpp",
+    "cc": "cpp",
+    "cxx": "cpp",
+    "c": "cpp",
+    "h": "cpp",
+    "hpp": "cpp",
+    "hxx": "cpp",
+    "cs": "csharp",
+    "csx": "csharp",
+    "php": "php",
+    "phtml": "php",
+    "rb": "ruby",
+    "rake": "ruby",
+    "gemspec": "ruby",
+    "sh": "bash",
+    "bash": "bash",
+    "zsh": "bash",
+    "ksh": "bash",
+    "scala": "scala",
+    "sc": "scala",
+    "sbt": "scala",
+    "swift": "swift",
+    "ex": "elixir",
+    "exs": "elixir",
+    "vue": "vue",
+    "svelte": "svelte",
+    "graphql": "graphql",
+    "gql": "graphql",
+    "hs": "haskell",
+    "lhs": "haskell",
+    "lua": "lua",
+    "sql": "sql",
+    "json": "json",
+    "jsonc": "json",
+    "yaml": "yaml",
+    "yml": "yaml",
+    "html": "html-css",
+    "htm": "html-css",
+    "css": "html-css",
+    "scss": "html-css",
+    "sass": "html-css",
+    "less": "html-css",
+    "tex": "latex",
+    "latex": "latex",
+    "sty": "latex",
+    "cls": "latex",
+    "bib": "latex",
+    "md": "markdown",
+    "markdown": "markdown",
+    "zig": "zig",
+    "tf": "terraform",
+    "tfvars": "terraform",
+    "hcl": "terraform"
+  },
+
+  "filePatterns": {
+    "Dockerfile": "dockerfile",
+    "Dockerfile.*": "dockerfile",
+    "*.dockerfile": "dockerfile",
+    "Gemfile": "ruby",
+    "Rakefile": "ruby",
+    "go.mod": "go",
+    "go.sum": "go",
+    "Cargo.toml": "rust",
+    "Cargo.lock": "rust",
+    "package.json": "typescript",
+    "tsconfig.json": "typescript",
+    "pyproject.toml": "python",
+    "requirements.txt": "python",
+    "terragrunt.hcl": "terraform"
+  },
+
+  "languages": {
+    "rust": {
+      "enabled": true,
+      "script": "../../../rust-lsp/hooks/scripts/rust-hooks.sh",
+      "tools": {
+        "rustfmt": { "enabled": true, "binary": "rustfmt" },
+        "cargo-check": { "enabled": true, "binary": "cargo" },
+        "clippy": { "enabled": true, "binary": "cargo" },
+        "cargo-audit": { "enabled": true, "binary": "cargo-audit" }
+      },
+      "preCommit": {
+        "enabled": true,
+        "command": "cd \"$CLAUDE_PROJECT_DIR\" && cargo fmt -- --check && cargo clippy -- -D warnings && cargo test --no-fail-fast"
+      }
+    },
+
+    "python": {
+      "enabled": true,
+      "script": "../../../python-lsp/hooks/scripts/python-hooks.sh",
+      "tools": {
+        "ruff": { "enabled": true, "binary": "ruff" },
+        "black": { "enabled": true, "binary": "black" },
+        "isort": { "enabled": true, "binary": "isort" },
+        "pyright": { "enabled": true, "binary": "pyright" },
+        "mypy": { "enabled": true, "binary": "mypy" },
+        "pytest": { "enabled": true, "binary": "pytest" },
+        "bandit": { "enabled": true, "binary": "bandit" },
+        "pip-audit": { "enabled": true, "binary": "pip-audit" }
+      }
+    },
+
+    "go": {
+      "enabled": true,
+      "script": "../../../go-lsp/hooks/scripts/go-hooks.sh",
+      "tools": {
+        "gofmt": { "enabled": true, "binary": "gofmt" },
+        "goimports": { "enabled": true, "binary": "goimports" },
+        "go-vet": { "enabled": true, "binary": "go" },
+        "golangci-lint": { "enabled": true, "binary": "golangci-lint" },
+        "govulncheck": { "enabled": true, "binary": "govulncheck" }
+      }
+    },
+
+    "typescript": {
+      "enabled": true,
+      "script": "../../../typescript-lsp/hooks/scripts/typescript-hooks.sh",
+      "tools": {
+        "prettier": { "enabled": true, "binary": "prettier" },
+        "biome": { "enabled": true, "binary": "biome" },
+        "eslint": { "enabled": true, "binary": "eslint" },
+        "tsc": { "enabled": true, "binary": "tsc" }
+      }
+    },
+
+    "java": {
+      "enabled": true,
+      "script": "../../../java-lsp/hooks/scripts/java-hooks.sh",
+      "tools": {
+        "google-java-format": { "enabled": true, "binary": "google-java-format" },
+        "checkstyle": { "enabled": true, "binary": "checkstyle" },
+        "maven": { "enabled": true, "binary": "mvn" },
+        "gradle": { "enabled": true, "binary": "gradle" }
+      }
+    },
+
+    "kotlin": {
+      "enabled": true,
+      "script": "../../../kotlin-lsp/hooks/scripts/kotlin-hooks.sh",
+      "tools": {
+        "ktlint": { "enabled": true, "binary": "ktlint" },
+        "detekt": { "enabled": true, "binary": "detekt" }
+      }
+    },
+
+    "cpp": {
+      "enabled": true,
+      "script": "../../../cpp-lsp/hooks/scripts/cpp-hooks.sh",
+      "tools": {
+        "clang-format": { "enabled": true, "binary": "clang-format" },
+        "clang-tidy": { "enabled": true, "binary": "clang-tidy" },
+        "cppcheck": { "enabled": true, "binary": "cppcheck" }
+      }
+    },
+
+    "csharp": {
+      "enabled": true,
+      "script": "../../../csharp-lsp/hooks/scripts/csharp-hooks.sh",
+      "tools": {
+        "dotnet-format": { "enabled": true, "binary": "dotnet" }
+      }
+    },
+
+    "php": {
+      "enabled": true,
+      "script": "../../../php-lsp/hooks/scripts/php-hooks.sh",
+      "tools": {
+        "php-cs-fixer": { "enabled": true, "binary": "php-cs-fixer" },
+        "phpstan": { "enabled": true, "binary": "phpstan" },
+        "phpcs": { "enabled": true, "binary": "phpcs" }
+      }
+    },
+
+    "ruby": {
+      "enabled": true,
+      "script": "../../../ruby-lsp/hooks/scripts/ruby-hooks.sh",
+      "tools": {
+        "rubocop": { "enabled": true, "binary": "rubocop" },
+        "bundle-audit": { "enabled": true, "binary": "bundle-audit" }
+      }
+    },
+
+    "bash": {
+      "enabled": true,
+      "script": "../../../bash-lsp/hooks/scripts/bash-hooks.sh",
+      "detectShebang": true,
+      "tools": {
+        "shellcheck": { "enabled": true, "binary": "shellcheck" },
+        "shfmt": { "enabled": true, "binary": "shfmt" }
+      }
+    },
+
+    "scala": {
+      "enabled": true,
+      "script": "../../../scala-lsp/hooks/scripts/scala-hooks.sh",
+      "tools": {
+        "scalafmt": { "enabled": true, "binary": "scalafmt" }
+      }
+    },
+
+    "swift": {
+      "enabled": true,
+      "script": "../../../swift-lsp/hooks/scripts/swift-hooks.sh",
+      "tools": {
+        "swift-format": { "enabled": true, "binary": "swift-format" },
+        "swiftlint": { "enabled": true, "binary": "swiftlint" }
+      }
+    },
+
+    "elixir": {
+      "enabled": true,
+      "script": "../../../elixir-lsp/hooks/scripts/elixir-hooks.sh",
+      "tools": {
+        "mix-format": { "enabled": true, "binary": "mix" }
+      }
+    },
+
+    "vue": {
+      "enabled": true,
+      "script": "../../../vue-lsp/hooks/scripts/vue-hooks.sh",
+      "tools": {
+        "prettier": { "enabled": true, "binary": "prettier" },
+        "eslint": { "enabled": true, "binary": "eslint" }
+      }
+    },
+
+    "svelte": {
+      "enabled": true,
+      "script": "../../../svelte-lsp/hooks/scripts/svelte-hooks.sh",
+      "tools": {
+        "prettier": { "enabled": true, "binary": "prettier" },
+        "svelte-check": { "enabled": true, "binary": "svelte-check" }
+      }
+    },
+
+    "graphql": {
+      "enabled": true,
+      "script": "../../../graphql-lsp/hooks/scripts/graphql-hooks.sh",
+      "tools": {
+        "prettier": { "enabled": true, "binary": "prettier" }
+      }
+    },
+
+    "haskell": {
+      "enabled": true,
+      "script": "../../../haskell-lsp/hooks/scripts/haskell-hooks.sh",
+      "tools": {
+        "ormolu": { "enabled": true, "binary": "ormolu" },
+        "hlint": { "enabled": true, "binary": "hlint" }
+      }
+    },
+
+    "lua": {
+      "enabled": true,
+      "script": "../../../lua-lsp/hooks/scripts/lua-hooks.sh",
+      "tools": {
+        "stylua": { "enabled": true, "binary": "stylua" },
+        "luacheck": { "enabled": true, "binary": "luacheck" }
+      }
+    },
+
+    "sql": {
+      "enabled": true,
+      "script": "../../../sql-lsp/hooks/scripts/sql-hooks.sh",
+      "tools": {
+        "sqlfluff": { "enabled": true, "binary": "sqlfluff" }
+      }
+    },
+
+    "dockerfile": {
+      "enabled": true,
+      "script": "../../../dockerfile-lsp/hooks/scripts/dockerfile-hooks.sh",
+      "tools": {
+        "hadolint": { "enabled": true, "binary": "hadolint" }
+      }
+    },
+
+    "json": {
+      "enabled": true,
+      "script": "../../../json-lsp/hooks/scripts/json-hooks.sh",
+      "tools": {
+        "jq": { "enabled": true, "binary": "jq" },
+        "prettier": { "enabled": true, "binary": "prettier" }
+      }
+    },
+
+    "yaml": {
+      "enabled": true,
+      "script": "../../../yaml-lsp/hooks/scripts/yaml-hooks.sh",
+      "tools": {
+        "yamllint": { "enabled": true, "binary": "yamllint" },
+        "yq": { "enabled": true, "binary": "yq" }
+      }
+    },
+
+    "html-css": {
+      "enabled": true,
+      "script": "../../../html-css-lsp/hooks/scripts/html-css-hooks.sh",
+      "tools": {
+        "prettier": { "enabled": true, "binary": "prettier" },
+        "stylelint": { "enabled": true, "binary": "stylelint" }
+      }
+    },
+
+    "latex": {
+      "enabled": true,
+      "script": "../../../latex-lsp/hooks/scripts/latex-hooks.sh",
+      "tools": {
+        "latexindent": { "enabled": true, "binary": "latexindent" },
+        "chktex": { "enabled": true, "binary": "chktex" }
+      }
+    },
+
+    "markdown": {
+      "enabled": true,
+      "script": "../../../markdown-lsp/hooks/scripts/markdown-hooks.sh",
+      "tools": {
+        "markdownlint": { "enabled": true, "binary": "markdownlint" }
+      }
+    },
+
+    "zig": {
+      "enabled": true,
+      "script": "../../../zig-lsp/hooks/scripts/zig-hooks.sh",
+      "tools": {
+        "zig-fmt": { "enabled": true, "binary": "zig" }
+      }
+    },
+
+    "terraform": {
+      "enabled": true,
+      "script": "../../../terraform-lsp/hooks/scripts/terraform-hooks.sh",
+      "tools": {
+        "terraform-fmt": { "enabled": true, "binary": "terraform" },
+        "tflint": { "enabled": true, "binary": "tflint" },
+        "trivy": { "enabled": true, "binary": "trivy" },
+        "checkov": { "enabled": true, "binary": "checkov" },
+        "terragrunt": { "enabled": true, "binary": "terragrunt" }
+      }
+    }
+  }
+}

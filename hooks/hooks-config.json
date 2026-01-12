@@ -103,7 +103,7 @@
   "languages": {
     "rust": {
       "enabled": true,
-      "script": "../../../rust-lsp/hooks/scripts/rust-hooks.sh",
+      "script": "./scripts/rust-hooks.sh",
       "tools": {
         "rustfmt": { "enabled": true, "binary": "rustfmt" },
         "cargo-check": { "enabled": true, "binary": "cargo" },
@@ -118,7 +118,7 @@
 
     "python": {
       "enabled": true,
-      "script": "../../../python-lsp/hooks/scripts/python-hooks.sh",
+      "script": "./scripts/python-hooks.sh",
       "tools": {
         "ruff": { "enabled": true, "binary": "ruff" },
         "black": { "enabled": true, "binary": "black" },
@@ -133,7 +133,7 @@
 
     "go": {
       "enabled": true,
-      "script": "../../../go-lsp/hooks/scripts/go-hooks.sh",
+      "script": "./scripts/go-hooks.sh",
       "tools": {
         "gofmt": { "enabled": true, "binary": "gofmt" },
         "goimports": { "enabled": true, "binary": "goimports" },
@@ -145,7 +145,7 @@
 
     "typescript": {
       "enabled": true,
-      "script": "../../../typescript-lsp/hooks/scripts/typescript-hooks.sh",
+      "script": "./scripts/typescript-hooks.sh",
       "tools": {
         "prettier": { "enabled": true, "binary": "prettier" },
         "biome": { "enabled": true, "binary": "biome" },
@@ -156,7 +156,7 @@
 
     "java": {
       "enabled": true,
-      "script": "../../../java-lsp/hooks/scripts/java-hooks.sh",
+      "script": "./scripts/java-hooks.sh",
       "tools": {
         "google-java-format": { "enabled": true, "binary": "google-java-format" },
         "checkstyle": { "enabled": true, "binary": "checkstyle" },
@@ -167,7 +167,7 @@
 
     "kotlin": {
       "enabled": true,
-      "script": "../../../kotlin-lsp/hooks/scripts/kotlin-hooks.sh",
+      "script": "./scripts/kotlin-hooks.sh",
       "tools": {
         "ktlint": { "enabled": true, "binary": "ktlint" },
         "detekt": { "enabled": true, "binary": "detekt" }
@@ -176,7 +176,7 @@
 
     "cpp": {
       "enabled": true,
-      "script": "../../../cpp-lsp/hooks/scripts/cpp-hooks.sh",
+      "script": "./scripts/cpp-hooks.sh",
       "tools": {
         "clang-format": { "enabled": true, "binary": "clang-format" },
         "clang-tidy": { "enabled": true, "binary": "clang-tidy" },
@@ -186,7 +186,7 @@
 
     "csharp": {
       "enabled": true,
-      "script": "../../../csharp-lsp/hooks/scripts/csharp-hooks.sh",
+      "script": "./scripts/csharp-hooks.sh",
       "tools": {
         "dotnet-format": { "enabled": true, "binary": "dotnet" }
       }
@@ -194,7 +194,7 @@
 
     "php": {
       "enabled": true,
-      "script": "../../../php-lsp/hooks/scripts/php-hooks.sh",
+      "script": "./scripts/php-hooks.sh",
       "tools": {
         "php-cs-fixer": { "enabled": true, "binary": "php-cs-fixer" },
         "phpstan": { "enabled": true, "binary": "phpstan" },
@@ -204,7 +204,7 @@
 
     "ruby": {
       "enabled": true,
-      "script": "../../../ruby-lsp/hooks/scripts/ruby-hooks.sh",
+      "script": "./scripts/ruby-hooks.sh",
       "tools": {
         "rubocop": { "enabled": true, "binary": "rubocop" },
         "bundle-audit": { "enabled": true, "binary": "bundle-audit" }
@@ -213,7 +213,7 @@
 
     "bash": {
       "enabled": true,
-      "script": "../../../bash-lsp/hooks/scripts/bash-hooks.sh",
+      "script": "./scripts/bash-hooks.sh",
       "detectShebang": true,
       "tools": {
         "shellcheck": { "enabled": true, "binary": "shellcheck" },
@@ -223,7 +223,7 @@
 
     "scala": {
       "enabled": true,
-      "script": "../../../scala-lsp/hooks/scripts/scala-hooks.sh",
+      "script": "./scripts/scala-hooks.sh",
       "tools": {
         "scalafmt": { "enabled": true, "binary": "scalafmt" }
       }
@@ -231,7 +231,7 @@
 
     "swift": {
       "enabled": true,
-      "script": "../../../swift-lsp/hooks/scripts/swift-hooks.sh",
+      "script": "./scripts/swift-hooks.sh",
       "tools": {
         "swift-format": { "enabled": true, "binary": "swift-format" },
         "swiftlint": { "enabled": true, "binary": "swiftlint" }
@@ -240,7 +240,7 @@
 
     "elixir": {
       "enabled": true,
-      "script": "../../../elixir-lsp/hooks/scripts/elixir-hooks.sh",
+      "script": "./scripts/elixir-hooks.sh",
       "tools": {
         "mix-format": { "enabled": true, "binary": "mix" }
       }
@@ -248,7 +248,7 @@
 
     "vue": {
       "enabled": true,
-      "script": "../../../vue-lsp/hooks/scripts/vue-hooks.sh",
+      "script": "./scripts/vue-hooks.sh",
       "tools": {
         "prettier": { "enabled": true, "binary": "prettier" },
         "eslint": { "enabled": true, "binary": "eslint" }
@@ -257,7 +257,7 @@
 
     "svelte": {
       "enabled": true,
-      "script": "../../../svelte-lsp/hooks/scripts/svelte-hooks.sh",
+      "script": "./scripts/svelte-hooks.sh",
       "tools": {
         "prettier": { "enabled": true, "binary": "prettier" },
         "svelte-check": { "enabled": true, "binary": "svelte-check" }
@@ -266,7 +266,7 @@
 
     "graphql": {
       "enabled": true,
-      "script": "../../../graphql-lsp/hooks/scripts/graphql-hooks.sh",
+      "script": "./scripts/graphql-hooks.sh",
       "tools": {
         "prettier": { "enabled": true, "binary": "prettier" }
       }
@@ -274,7 +274,7 @@
 
     "haskell": {
       "enabled": true,
-      "script": "../../../haskell-lsp/hooks/scripts/haskell-hooks.sh",
+      "script": "./scripts/haskell-hooks.sh",
       "tools": {
         "ormolu": { "enabled": true, "binary": "ormolu" },
         "hlint": { "enabled": true, "binary": "hlint" }
@@ -283,7 +283,7 @@
 
     "lua": {
       "enabled": true,
-      "script": "../../../lua-lsp/hooks/scripts/lua-hooks.sh",
+      "script": "./scripts/lua-hooks.sh",
       "tools": {
         "stylua": { "enabled": true, "binary": "stylua" },
         "luacheck": { "enabled": true, "binary": "luacheck" }
@@ -292,7 +292,7 @@
 
     "sql": {
       "enabled": true,
-      "script": "../../../sql-lsp/hooks/scripts/sql-hooks.sh",
+      "script": "./scripts/sql-hooks.sh",
       "tools": {
         "sqlfluff": { "enabled": true, "binary": "sqlfluff" }
       }
@@ -300,7 +300,7 @@
 
     "dockerfile": {
       "enabled": true,
-      "script": "../../../dockerfile-lsp/hooks/scripts/dockerfile-hooks.sh",
+      "script": "./scripts/dockerfile-hooks.sh",
       "tools": {
         "hadolint": { "enabled": true, "binary": "hadolint" }
       }
@@ -308,7 +308,7 @@
 
     "json": {
       "enabled": true,
-      "script": "../../../json-lsp/hooks/scripts/json-hooks.sh",
+      "script": "./scripts/json-hooks.sh",
       "tools": {
         "jq": { "enabled": true, "binary": "jq" },
         "prettier": { "enabled": true, "binary": "prettier" }
@@ -317,7 +317,7 @@
 
     "yaml": {
       "enabled": true,
-      "script": "../../../yaml-lsp/hooks/scripts/yaml-hooks.sh",
+      "script": "./scripts/yaml-hooks.sh",
       "tools": {
         "yamllint": { "enabled": true, "binary": "yamllint" },
         "yq": { "enabled": true, "binary": "yq" }
@@ -326,7 +326,7 @@
 
     "html-css": {
       "enabled": true,
-      "script": "../../../html-css-lsp/hooks/scripts/html-css-hooks.sh",
+      "script": "./scripts/html-css-hooks.sh",
       "tools": {
         "prettier": { "enabled": true, "binary": "prettier" },
         "stylelint": { "enabled": true, "binary": "stylelint" }
@@ -335,7 +335,7 @@
 
     "latex": {
       "enabled": true,
-      "script": "../../../latex-lsp/hooks/scripts/latex-hooks.sh",
+      "script": "./scripts/latex-hooks.sh",
       "tools": {
         "latexindent": { "enabled": true, "binary": "latexindent" },
         "chktex": { "enabled": true, "binary": "chktex" }
@@ -344,7 +344,7 @@
 
     "markdown": {
       "enabled": true,
-      "script": "../../../markdown-lsp/hooks/scripts/markdown-hooks.sh",
+      "script": "./scripts/markdown-hooks.sh",
       "tools": {
         "markdownlint": { "enabled": true, "binary": "markdownlint" }
       }
@@ -352,7 +352,7 @@
 
     "zig": {
       "enabled": true,
-      "script": "../../../zig-lsp/hooks/scripts/zig-hooks.sh",
+      "script": "./scripts/zig-hooks.sh",
       "tools": {
         "zig-fmt": { "enabled": true, "binary": "zig" }
       }
@@ -360,7 +360,7 @@
 
     "terraform": {
       "enabled": true,
-      "script": "../../../terraform-lsp/hooks/scripts/terraform-hooks.sh",
+      "script": "./scripts/terraform-hooks.sh",
       "tools": {
         "terraform-fmt": { "enabled": true, "binary": "terraform" },
         "tflint": { "enabled": true, "binary": "tflint" },

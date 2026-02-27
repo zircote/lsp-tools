@@ -27,6 +27,6 @@ jobs:
           echo "All required files present"
 
       - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v19
+        uses: DavidAnson/markdownlint-cli2-action@v22
         with:
           globs: "**/*.md"
